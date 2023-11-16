@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import { ThemeProvider } from "@/components/theme-provider";
+import { cn } from "@/lib/utils";
+import Header from "@/components/header/header";
+import DebugInfo from "@/components/debug-info";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,8 +20,24 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en">
-            <body className={inter.className}>{children}</body>
+        <html lang="en" suppressHydrationWarning>
+            <body
+                className={cn(
+                    "bg-background font-sans antialiased min-h-screen",
+                    inter.className
+                )}
+            >
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <Header />
+                    <main className="px-4 md:px-10">{children}</main>
+                    <DebugInfo />
+                </ThemeProvider>
+            </body>
         </html>
     );
 }
