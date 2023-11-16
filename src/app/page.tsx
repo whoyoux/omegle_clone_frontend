@@ -9,6 +9,12 @@ export default function Home() {
 
     useEffect(() => {
         socket.on("connect", () => setIsConnected(true));
+        socket.on("disconnect", () => setIsConnected(false));
+
+        return () => {
+            socket.off("connect");
+            socket.off("disconnect");
+        };
     }, []);
 
     return <main>{isConnected ? "Connected!" : "Not connected!"}</main>;
