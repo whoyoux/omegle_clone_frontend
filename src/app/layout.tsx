@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import Header from "@/components/header/header";
 import DebugInfo from "@/components/debug-info";
+import { SocketProvider } from "@/components/socket-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,9 +34,11 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <Header />
-                    <main className="px-4 md:px-10">{children}</main>
-                    <DebugInfo />
+                    <SocketProvider>
+                        <Header />
+                        <main className="px-4 md:px-10">{children}</main>
+                        <DebugInfo />
+                    </SocketProvider>
                 </ThemeProvider>
             </body>
         </html>
